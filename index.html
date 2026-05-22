@@ -781,6 +781,20 @@
 
     .field-payment-error { color: #ffb4b4; font-size: .9rem; min-height: 18px; }
 
+    .payment-note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(109,94,252,.12), rgba(0,194,255,.08));
+      border: 1px solid rgba(109,94,252,.25);
+      color: #c4d4ff;
+      font-size: .88rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    [dir="rtl"] .payment-note { text-align: center; }
+
     .inline-note {
       margin-top: 10px;
       color: var(--muted);
@@ -1551,6 +1565,8 @@
                 <button type="submit" class="btn btn-primary" id="confirmBtn" data-i18n="confirmOrder">
                   Confirmer la commande
                 </button>
+
+                <p class="payment-note" data-i18n="paymentNote">Le paiement se fait après discussion sur WhatsApp avec notre admin, afin de répondre à toutes vos questions et vous mettre à l'aise.</p>
               </div>
             </form>
           </div>
@@ -1731,6 +1747,7 @@
         validationText:"Remplissez vos informations pour confirmer la commande.",
         firstName:"Prénom", lastName:"Nom", whatsapp:"Numéro WhatsApp",
         paymentMethod:"Choisissez votre méthode de paiement",
+        paymentNote:"Le paiement se fait après discussion sur WhatsApp avec notre admin, afin de répondre à toutes vos questions et vous mettre à l'aise.",
         confirmOrder:"Confirmer la commande",
         reviewsTitle:"Avis de nos clients",
         reviewsText:"Une section élégante, facilement modifiable et conçue pour inspirer confiance.",
@@ -1794,6 +1811,7 @@
         validationText:"املأ معلوماتك لتأكيد الطلب.",
         firstName:"الاسم", lastName:"اللقب", whatsapp:"رقم واتساب",
         paymentMethod:"اختر طريقة الدفع",
+        paymentNote:"الدفع يتم بعد التواصل مع الأدمن عبر واتساب، للإجابة على جميع أسئلتكم وضمان راحتكم التامة.",
         confirmOrder:"تأكيد الطلب",
         reviewsTitle:"آراء عملائنا",
         reviewsText:"قسم أنيق وسهل التعديل ومصمم لبناء الثقة.",
