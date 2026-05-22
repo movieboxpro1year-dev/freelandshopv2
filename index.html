@@ -710,6 +710,77 @@
 
     .field-error { color: #ffb4b4; font-size: .9rem; min-height: 18px; }
 
+    /* Payment method selector */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .payment-option {
+      position: relative;
+    }
+
+    .payment-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .payment-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px 10px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      cursor: pointer;
+      transition: border-color .25s, background .25s, box-shadow .25s, transform .2s;
+      text-align: center;
+      min-height: 72px;
+      font-weight: 0;
+      color: var(--muted) !important;
+      font-size: .82rem;
+    }
+
+    .payment-option label .pay-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .payment-option label .pay-name {
+      font-weight: 700;
+      font-size: .85rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .payment-option label .pay-sub {
+      font-size: .72rem;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+
+    .payment-option input[type="radio"]:checked + label {
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(109,94,252,.25), rgba(0,194,255,.15));
+      box-shadow: 0 0 0 1.5px rgba(109,94,252,.70), 0 0 20px rgba(109,94,252,.25);
+      transform: translateY(-2px);
+      color: var(--text) !important;
+    }
+
+    .payment-option label:hover {
+      border-color: rgba(109,94,252,.45);
+      background: rgba(109,94,252,.10);
+    }
+
+    .field-payment-error { color: #ffb4b4; font-size: .9rem; min-height: 18px; }
+
     .inline-note {
       margin-top: 10px;
       color: var(--muted);
@@ -1420,6 +1491,56 @@
                 </div>
 
                 <div class="field">
+                  <label data-i18n="paymentMethod">Méthode de paiement</label>
+                  <div class="payment-methods">
+
+                    <div class="payment-option">
+                      <input type="radio" name="paymentMethod" id="pay-baridi" value="baridi" />
+                      <label for="pay-baridi">
+                        <span class="pay-icon">📱</span>
+                        <span class="pay-name">Baridi Mob</span>
+                      </label>
+                    </div>
+
+                    <div class="payment-option">
+                      <input type="radio" name="paymentMethod" id="pay-cib" value="cib" />
+                      <label for="pay-cib">
+                        <span class="pay-icon">💳</span>
+                        <span class="pay-name">Carte CIB</span>
+                        <span class="pay-sub">SlickPay officiel</span>
+                      </label>
+                    </div>
+
+                    <div class="payment-option">
+                      <input type="radio" name="paymentMethod" id="pay-flexy" value="flexy" />
+                      <label for="pay-flexy">
+                        <span class="pay-icon">📲</span>
+                        <span class="pay-name">Flexy</span>
+                      </label>
+                    </div>
+
+                    <div class="payment-option">
+                      <input type="radio" name="paymentMethod" id="pay-dollars" value="dollars" />
+                      <label for="pay-dollars">
+                        <span class="pay-icon">💵</span>
+                        <span class="pay-name">Dollars</span>
+                      </label>
+                    </div>
+
+                    <div class="payment-option">
+                      <input type="radio" name="paymentMethod" id="pay-crypto" value="crypto" />
+                      <label for="pay-crypto">
+                        <span class="pay-icon">🪙</span>
+                        <span class="pay-name">Crypto</span>
+                        <span class="pay-sub">USDT BEP20</span>
+                      </label>
+                    </div>
+
+                  </div>
+                  <div class="field-payment-error" id="error-payment"></div>
+                </div>
+
+                <div class="field">
                   <label for="whatsapp" data-i18n="whatsapp">Numéro WhatsApp</label>
                   <input type="tel" id="whatsapp" name="whatsapp" inputmode="tel" placeholder="+213 ..." autocomplete="tel" />
                   <div class="field-error" id="error-whatsapp"></div>
@@ -1609,6 +1730,7 @@
         validationTitle:"Validation complète",
         validationText:"Remplissez vos informations pour confirmer la commande.",
         firstName:"Prénom", lastName:"Nom", whatsapp:"Numéro WhatsApp",
+        paymentMethod:"Choisissez votre méthode de paiement",
         confirmOrder:"Confirmer la commande",
         reviewsTitle:"Avis de nos clients",
         reviewsText:"Une section élégante, facilement modifiable et conçue pour inspirer confiance.",
@@ -1671,6 +1793,7 @@
         validationTitle:"تأكيد كامل",
         validationText:"املأ معلوماتك لتأكيد الطلب.",
         firstName:"الاسم", lastName:"اللقب", whatsapp:"رقم واتساب",
+        paymentMethod:"اختر طريقة الدفع",
         confirmOrder:"تأكيد الطلب",
         reviewsTitle:"آراء عملائنا",
         reviewsText:"قسم أنيق وسهل التعديل ومصمم لبناء الثقة.",
@@ -1787,6 +1910,7 @@
       const fn = $("firstName").value.trim();
       const ln = $("lastName").value.trim();
       const wa = $("whatsapp").value.trim();
+      const pm = document.querySelector('input[name="paymentMethod"]:checked');
       let valid = true;
 
       [["firstName", fn, t("requiredFirstName")],
@@ -1797,6 +1921,14 @@
         el.textContent = val ? "" : msg;
         if (!val) valid = false;
       });
+
+      const pmErr = $("error-payment");
+      if (!pm) {
+        pmErr.textContent = state.lang === "ar" ? "يرجى اختيار طريقة الدفع" : "Veuillez choisir une méthode de paiement";
+        valid = false;
+      } else {
+        pmErr.textContent = "";
+      }
 
       if (!state.cart.length) {
         els.errorCart.textContent = t("requiredCart");
@@ -1826,6 +1958,7 @@
       renderCart();
       els.orderForm.reset();
       ["firstName","lastName","whatsapp"].forEach(k => { $(`error-${k}`).textContent = ""; });
+      $("error-payment").textContent = "";
       els.errorCart.textContent = "";
       els.app.querySelectorAll("section, footer").forEach(s => s.classList.remove("hidden"));
       els.confirmationSection.classList.add("hidden");
